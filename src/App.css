@@ -1,0 +1,41 @@
+.login-container{
+    background: linear-gradient(to right,rgba(254, 175, 0, .9),rgba(254, 175, 0, .5))
+}
+.login-container .title h3,.side-title{
+    display: flex;
+    align-items: center;
+}
+.login-container .title h3{
+    gap: .8rem;
+
+}
+.side-title{
+    gap: .3rem;
+}
+.login-container .title h3::before,
+.side-title::before{
+    content: "";
+    display: block;
+    height: 1.5rem;
+    width: .4rem;
+    background: rgba(254, 175, 0, .8);
+}
+.sidebarContainer{
+    background: rgba(254, 175, 0, .4);
+    min-height: 100vh;
+    
+}
+.sidebarContainer .ps-sidebar-container{
+    background: none;
+    min-height: 100vh;
+}
+.sidebarContainer .ps-sidebar-container .ps-menu-button:hover{
+    background-color:#F8D442;
+}
+.myIcon{
+    /* color: #F8D442; */
+    cursor: pointer;
+}
+
+
+
