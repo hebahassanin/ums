@@ -7,6 +7,7 @@ import { CiEdit } from "react-icons/ci";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Navbar from "../NavBar/NavBar";
 
 
 interface user{
@@ -23,6 +24,7 @@ export default function UsersList() {
   let [users,setUsers] = useState<user[]>([]);
   let [userId,setUserId] = useState<number | null>(null);
   let [userData,setUserData] = useState<user | null>(null);
+  const[searchTerm,setSearchTerm]=useState("");
 
 
   //modal
@@ -77,8 +79,12 @@ export default function UsersList() {
     getUsers();
 
   },[])
+//
+  const filteredUsers =users.filter((user)=> user.firstName.toLowerCase().includes(searchTerm.toLowerCase()));
   return (
     <div>
+
+    <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
       <div className="d-flex justify-content-between mt-4 mx-3">
         <h3 className="fw-bold">UsersList</h3>
         <button className="btn btn-warning text-white" onClick={navigateToAddUser}>Add new user</button>
@@ -99,7 +105,7 @@ export default function UsersList() {
         </tr>
       </thead>
       <tbody>
-        {users.map((user)=>(
+        {filteredUsers.map((user)=>(
           <tr key={user?.id}>
             <td>{user?.id}</td>
             <td><img src={user?.image} className="w-25"/></td>
@@ -109,8 +115,8 @@ export default function UsersList() {
             <td>{user?.phone}</td>
             <td>{user?.birthDate}</td>
             <td>
-              <CiEdit size={30} onClick={()=> handleUpdate(user)} className="text-warning" />
-              <FaRegTrashAlt size={25}  onClick={()=>handleShow(user)} className="text-danger mx-1" />
+              <CiEdit size={30} onClick={()=> handleUpdate(user)} className="text-warning" style={{cursor:"pointer"}} />
+              <FaRegTrashAlt size={25}  onClick={()=>handleShow(user)} className="text-danger mx-1" style={{cursor:"pointer"}} />
             </td>
           </tr>
         ))}
@@ -118,8 +124,8 @@ export default function UsersList() {
     </Table>
 
     {/* Modal */}
-    <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+    <Modal show={show} onHide={handleClose} dialogClassName="custom-modal">
+        <Modal.Header className="bg-danger text-white" closeButton>
           <Modal.Title>Confirmation Message</Modal.Title>
         </Modal.Header>
         <Modal.Body>Are you sure, you want to delete {userData?.firstName}?</Modal.Body>

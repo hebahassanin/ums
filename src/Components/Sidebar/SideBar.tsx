@@ -1,5 +1,5 @@
 import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { FaUsersGear } from "react-icons/fa6";
 import { GrUserSettings } from "react-icons/gr";
@@ -13,9 +13,17 @@ import { TbLayoutSidebarRightCollapseFilled } from "react-icons/tb";
 
 export default function SideBar() {
 
-  let{userData}:any=useContext(AuthContext);
-
+  let{userData, logoutUser}:any=useContext(AuthContext);
    console.log(userData);
+
+   let navigate =useNavigate();
+
+   const handleLogout=()=>{
+    logoutUser();
+    navigate("/");
+   }
+
+
 
   let[collapsed, setCollapsed]= useState(false);
 
@@ -35,9 +43,6 @@ export default function SideBar() {
     </div>
 
 
-
-
-
       <h4 className="side-title fw-bold my-3 mx-2">UMS</h4>
       <div className="text-center my-3">
         <img src={userData?.image} alt="profile" className="w-25 rounded-circle"/>
@@ -51,7 +56,7 @@ export default function SideBar() {
       <MenuItem icon={<FaUsersGear />} component={<Link to="/dashboard/users-list" />}> Users</MenuItem>
       <MenuItem icon={<GrUserSettings />} component={<Link to="/dashboard/add-user" />}> Add user</MenuItem>
       <MenuItem icon={<CgProfile />} component={<Link to="/dashboard/profile" />}> Profile</MenuItem>
-      <MenuItem icon={<MdLogout />} component={<Link to="/" />}> Logout</MenuItem>
+      <MenuItem icon={<MdLogout />} onClick={handleLogout}> Logout</MenuItem>
     </Menu>
     
 </Sidebar>;

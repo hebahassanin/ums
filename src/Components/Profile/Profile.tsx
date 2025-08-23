@@ -9,7 +9,7 @@ export default function Profile() {
   return (
     <>
 
-<div>
+    <div>
       <div className="my-4 mx-3">
         <h3 className="fw-bold">Profile</h3>
         <hr/>
@@ -17,6 +17,12 @@ export default function Profile() {
        
 
         <form className="m-5 shadow-lg p-5">
+
+          <div className="row justify-content-center text-center mb-4">
+            <div className="col-md-12">
+            <img src={userData?.image} alt="profile" className="rounded-circle" style={{width:"70px"}}/>
+            </div>
+          </div>
           <div className="row">
             <div className="col-md-6">
               <label>First Name</label>

@@ -1,5 +1,13 @@
+
 .login-container{
     background: linear-gradient(to right,rgba(254, 175, 0, .9),rgba(254, 175, 0, .5))
+}
+
+.login-container .title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column ;
 }
 .login-container .title h3,.side-title{
     display: flex;
@@ -35,6 +43,13 @@
 .myIcon{
     /* color: #F8D442; */
     cursor: pointer;
+}
+
+
+/* Modal*/
+.custom-modal{
+    max-width: 400px;
+    margin: 40px auto;
 }
 
 

@@ -16,7 +16,7 @@ export default function Login() {
 
   interface AuthContextType{
     // saveUserData:()=>void
-    // getUserData:()=>void;
+    getUserData:()=>void;
 
   }
 
@@ -36,11 +36,8 @@ let {getUserData}= useContext(AuthContext) as AuthContextType;
       await getUserData()
 
       // saveUserData();
-
-
       console.log(response);
       
-
       toast.success("Wow logged successfully!");
       navigate('/dashboard');
       // navigate('/dashboard',{state:{user:response.data}});
@@ -49,8 +46,6 @@ let {getUserData}= useContext(AuthContext) as AuthContextType;
     } catch (error) {
       toast.error("sorry logged failed!");
       console.log(error);
-      
-      
     }
   }
 
@@ -70,8 +65,8 @@ let {getUserData}= useContext(AuthContext) as AuthContextType;
             <form onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <label><FaUser className="mb-1" size={15}/> userName</label>
-                <input className="form-control" type="text" placeholder="enter username"
-                {...register("username",{required:"username is required!!"})}
+                <input className="form-control" type="text" placeholder="Enter username"
+                {...register("username",{required:"Username is required!!"})}
                 />
                 {errors.username &&<span className="text-danger">{errors.username.message}</span>}
 
@@ -79,15 +74,15 @@ let {getUserData}= useContext(AuthContext) as AuthContextType;
              
               <div className="mt-2">
                 <label><TbLockPassword className="mb-1" size={18}/> password</label>
-                <input className="form-control" type="text" placeholder="enter password"
-                {...register("password",{required:"pass is requird!!"})}
+                <input className="form-control" type="password" placeholder="Enter password"
+                {...register("password",{required:"Password is required!!"})}
                 />
                 {errors.password &&<span className="text-danger">{errors.password.message}</span>}
               </div>
               
 
               <div className="sub-btn">
-                <button className="btn btn-warning w-100 my-4 text-white">SIGN IN</button>
+                <button className="btn btn-warning w-100 my-4 text-white">Signin</button>
               </div>
             </form>
 
