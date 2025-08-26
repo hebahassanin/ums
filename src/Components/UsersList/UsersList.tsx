@@ -24,13 +24,17 @@ export default function UsersList() {
   let [users,setUsers] = useState<user[]>([]);
   let [userId,setUserId] = useState<number | null>(null);
   let [userData,setUserData] = useState<user | null>(null);
-  const[searchTerm,setSearchTerm]=useState("");
+  const [searchTerm,setSearchTerm]=useState("");
+
+  const [isDeleting, setIsDeleting]=useState(false);
 
 
   //modal
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () =>{ 
+    if(!isDeleting) setShow(false);
+  };
   const handleShow = (user:user) => {
     setShow(true);
     setUserId(user.id);
@@ -41,6 +45,9 @@ export default function UsersList() {
 
   // delete user
   let deleteUser= async()=>{
+    if(isDeleting) return;
+    setIsDeleting(true);
+
     try {
       await axios.delete(`https://dummyjson.com/users/${userId}`);
       handleClose();
@@ -50,6 +57,8 @@ export default function UsersList() {
     } catch (error) {
       toast.error("sorry deleted fail");
       
+    }finally{
+      setIsDeleting(false);
     }
   }
 
@@ -128,13 +137,13 @@ export default function UsersList() {
         <Modal.Header className="bg-danger text-white" closeButton>
           <Modal.Title>Confirmation Message</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure, you want to delete {userData?.firstName}?</Modal.Body>
+        <Modal.Body className="py-4">Are you sure, you want to delete {userData?.firstName}?</Modal.Body>
         <Modal.Footer>
+         <Button variant="danger" onClick={deleteUser} disabled={isDeleting}>
+            {isDeleting ? "Deleting..." : "Confirm delete"}
+          </Button>
           <Button variant="secondary" onClick={handleClose}>
             Cancel
-          </Button>
-          <Button variant="danger" onClick={deleteUser}>
-            Confirm delete
           </Button>
         </Modal.Footer>
       </Modal>
