@@ -1,5 +1,5 @@
 import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { FaUsersGear } from "react-icons/fa6";
 import { GrUserSettings } from "react-icons/gr";
@@ -23,7 +23,8 @@ export default function SideBar() {
     navigate("/");
    }
 
-
+  // add active class to links in sidebar
+  const {pathname}=useLocation();
 
   let[collapsed, setCollapsed]= useState(false);
 
@@ -52,11 +53,11 @@ export default function SideBar() {
 
 
     <Menu>
-      <MenuItem icon={<FaHome />} component={<Link to="/dashboard" />}>Home</MenuItem>
-      <MenuItem icon={<FaUsersGear />} component={<Link to="/dashboard/users-list" />}> Users</MenuItem>
-      <MenuItem icon={<GrUserSettings />} component={<Link to="/dashboard/add-user" />}> Add user</MenuItem>
-      <MenuItem icon={<CgProfile />} component={<Link to="/dashboard/profile" />}> Profile</MenuItem>
-      <MenuItem icon={<MdLogout />} onClick={handleLogout}> Logout</MenuItem>
+      <MenuItem className={`${pathname === '/dashboard'? "active": null}`} icon={<FaHome />} component={<Link to="/dashboard" />}>Home</MenuItem>
+      <MenuItem className={`${pathname === '/dashboard/users-list'? "active": null}`} icon={<FaUsersGear />} component={<Link to="/dashboard/users-list" />}> Users</MenuItem>
+      <MenuItem className={`${pathname === '/dashboard/add-user'? "active": null}`}  icon={<GrUserSettings />} component={<Link to="/dashboard/add-user" />}> Add user</MenuItem>
+      <MenuItem className={`${pathname === '/dashboard/profile'? "active": null}`} icon={<CgProfile />} component={<Link to="/dashboard/profile" />}> Profile</MenuItem>
+      <MenuItem  icon={<MdLogout />} onClick={handleLogout}> Logout</MenuItem>
     </Menu>
     
 </Sidebar>;

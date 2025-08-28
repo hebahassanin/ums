@@ -1,6 +1,6 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
-import { Modal } from "react-bootstrap";
+import { Modal, Spinner } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import { CiEdit } from "react-icons/ci";
@@ -140,7 +140,10 @@ export default function UsersList() {
         <Modal.Body className="py-4">Are you sure, you want to delete {userData?.firstName}?</Modal.Body>
         <Modal.Footer>
          <Button variant="danger" onClick={deleteUser} disabled={isDeleting}>
-            {isDeleting ? "Deleting..." : "Confirm delete"}
+            {isDeleting ? <> 
+            <Spinner animation="border" size="sm" className="me-2" variant="light" />
+            Deleting...
+            </>  : "Confirm delete"}
           </Button>
           <Button variant="secondary" onClick={handleClose}>
             Cancel

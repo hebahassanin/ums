@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -7,6 +7,9 @@ import { AuthContext } from "../../context/AuthContext";
 
 import { TbLockPassword } from "react-icons/tb";
 import { FaUser } from "react-icons/fa";
+
+import { FaEyeSlash } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
 
 export default function Login() {
   interface LoginFormInputs{
@@ -26,6 +29,10 @@ let {getUserData}= useContext(AuthContext) as AuthContextType;
 
   let{register,handleSubmit,formState:{errors}}=useForm<LoginFormInputs>();
   let navigate= useNavigate();
+
+  // Show and hide password with icon
+  const [showPassword, setShowPassword]=useState(false);
+
 
   let onSubmit= async (data:LoginFormInputs)=>{
     //api
@@ -74,9 +81,17 @@ let {getUserData}= useContext(AuthContext) as AuthContextType;
              
               <div className="mt-2">
                 <label><TbLockPassword className="mb-1" size={18}/> password</label>
-                <input className="form-control" type="password" placeholder="Enter password"
+
+                <div className="input-group">
+                <input className="form-control" type={showPassword ? "text" :"password"} placeholder="Enter password"
                 {...register("password",{required:"Password is required!!"})}
                 />
+                <span className="input-group-text" onClick={()=>setShowPassword(!showPassword)} 
+                style={{cursor:"pointer"}}>
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
+                </div>
+
                 {errors.password &&<span className="text-danger">{errors.password.message}</span>}
               </div>
               
