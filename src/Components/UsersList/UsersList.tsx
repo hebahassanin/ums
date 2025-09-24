@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Navbar from "../NavBar/NavBar";
 
+// import Spinner from 'react-bootstrap/Spinner';
+
 
 interface user{
   id: number;
@@ -25,6 +27,7 @@ export default function UsersList() {
   let [userId,setUserId] = useState<number | null>(null);
   let [userData,setUserData] = useState<user | null>(null);
   const [searchTerm,setSearchTerm]=useState("");
+  const [loading, setLoading] = useState(false);
 
   const [isDeleting, setIsDeleting]=useState(false);
 
@@ -66,11 +69,15 @@ export default function UsersList() {
   let navigate= useNavigate();
   let getUsers=async()=>{
     try {
+      setLoading(true);
       let response = await axios.get("https://dummyjson.com/users");
       setUsers(response?.data?.users);
 
     } catch (error) {
       console.log(error);
+    } finally{
+      setLoading(false);
+
     }
   }
 
@@ -94,6 +101,15 @@ export default function UsersList() {
     <div>
 
     <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+
+
+    {loading ? (
+      <div className="d-flex justify-content-center align-items-center " style={{height:"80vh"}}>
+         <Spinner animation="border" variant="warning" />
+      </div>
+    ):(
+
+      <>
       <div className="d-flex justify-content-between mt-4 mx-3">
         <h3 className="fw-bold">UsersList</h3>
         <button className="btn btn-warning text-white" onClick={navigateToAddUser}>Add new user</button>
@@ -131,6 +147,17 @@ export default function UsersList() {
         ))}
       </tbody>
     </Table>
+      
+      
+      </>
+    )
+  
+  
+  }
+
+
+
+      
 
     {/* Modal */}
     <Modal show={show} onHide={handleClose} dialogClassName="custom-modal">
